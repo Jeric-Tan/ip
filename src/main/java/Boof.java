@@ -47,6 +47,12 @@ public class Boof {
                 System.out.println("    -------------------------");
             
             } else if (command.equals("todo")) {
+                if (parts.length < 2) {
+                    System.out.println("    -------------------------");
+                    System.out.println("      OOPS!!! The description of a todo cannot be empty.");
+                    System.out.println("    -------------------------");
+                    continue;
+                }
                 String description = userText.substring(5);
                 Task newTask = new Todo(description);
                 textStorage[counter] = newTask;
@@ -59,6 +65,13 @@ public class Boof {
                 System.out.println("    -------------------------");
 
             } else if (command.equals("deadline")) {
+                if (parts.length < 2) {
+                    System.out.println("    -------------------------");
+                    System.out.println("      OOPS!!! The description of a deadline cannot be empty.");
+                    System.out.println("    -------------------------");
+                    continue;
+                }
+
                 String[] deadlineParts = userText.split(" /by ");
                 String description = deadlineParts[0].substring(9);
                 String byDate = deadlineParts[1];
@@ -73,6 +86,13 @@ public class Boof {
                 System.out.println("    -------------------------");
 
             } else if (command.equals("event")) {
+                if (parts.length < 2) {
+                    System.out.println("    -------------------------");
+                    System.out.println("      OOPS!!! The description of an event cannot be empty.");
+                    System.out.println("    -------------------------");
+                    continue;
+                }
+
                 String[] eventParts = userText.split(" /from | /to ");
                 String description = eventParts[0].substring(6);
                 String from = eventParts[1];
