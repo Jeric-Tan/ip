@@ -33,7 +33,7 @@ public class Boof {
                 t.markAsDone();
                 System.out.println("    -------------------------");
                 System.out.println("      Nice! I've marked this task as done:");
-                System.out.printf("        [%s] %s\n", t.getStatusIcon(), t.description);
+                System.out.printf("        %s\n", t.toString());
                 System.out.println("    -------------------------");
 
             } else if (command.equals("unmark")) {
@@ -43,7 +43,7 @@ public class Boof {
                 t.unmarkAsDone();
                 System.out.println("    -------------------------");
                 System.out.println("      OK, I've marked this task as not done yet:");
-                System.out.printf("        [%s] %s\n", t.getStatusIcon(), t.description);
+                System.out.printf("        %s\n", t.toString());
                 System.out.println("    -------------------------");
             
             } else if (command.equals("todo")) {
