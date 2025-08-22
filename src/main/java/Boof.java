@@ -107,6 +107,35 @@ public class Boof {
                 System.out.println("      Now you have " + counter + " tasks in the list.");
                 System.out.println("    -------------------------");
 
+            } else if (command.equals("delete")) {
+                if (parts.length < 2) {
+                    System.out.println("    -------------------------");
+                    System.out.println("      OOPS!!! Specify the task number to delete.");
+                    System.out.println("    -------------------------");
+                    continue;
+                }
+                int taskIndex = Integer.parseInt(parts[1]) - 1;
+                if (taskIndex < 0 || taskIndex >= counter) {
+                    System.out.println("    -------------------------");
+                    System.out.println("      OOPS!!! Task number does not exist.");
+                    System.out.println("    -------------------------");
+                    continue;
+                }
+
+                Task deletedTask = textStorage[taskIndex];
+                for (int i = taskIndex; i < counter - 1; i++) {
+                    textStorage[i] = textStorage[i + 1];
+                }
+                textStorage[counter - 1] = null; 
+                counter--;
+
+                System.out.println("    -------------------------");
+                System.out.println("      Noted. I've removed this task:");
+                System.out.println("        " + deletedTask.toString());
+                System.out.println("      Now you have " + counter + " tasks in the list.");
+                System.out.println("    -------------------------");
+
+
             } else {
                 System.out.println("    -------------------------");
                 System.out.println("        Idk what that means! Use either todo deadline or event to create a task!");
