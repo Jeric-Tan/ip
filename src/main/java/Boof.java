@@ -22,7 +22,7 @@ public class Boof {
             } else if (userText.equals("list")) {
                 System.out.println("    ------- Your List -------");
                 for (int i = 0; i < counter; i++) {
-                    System.out.printf("     %d.[%s] %s\n", i + 1, textStorage[i].getStatusIcon() ,textStorage[i].description);
+                    System.out.printf("     %d.%s\n", i + 1, textStorage[i].toString());
                 }
                 System.out.println("    -------------------------");
 
@@ -46,12 +46,51 @@ public class Boof {
                 System.out.printf("        [%s] %s\n", t.getStatusIcon(), t.description);
                 System.out.println("    -------------------------");
             
+            } else if (command.equals("todo")) {
+                String description = userText.substring(5);
+                Task newTask = new Todo(description);
+                textStorage[counter] = newTask;
+                counter++;
+                
+                System.out.println("    -------------------------");
+                System.out.println("      Got it. I've added this task:");
+                System.out.println("        " + newTask.toString());
+                System.out.println("      Now you have " + counter + " tasks in the list.");
+                System.out.println("    -------------------------");
+
+            } else if (command.equals("deadline")) {
+                String[] deadlineParts = userText.split(" /by ");
+                String description = deadlineParts[0].substring(9);
+                String byDate = deadlineParts[1];
+                Task newTask = new Deadline(description, byDate);
+                textStorage[counter] = newTask;
+                counter++;
+                
+                System.out.println("    -------------------------");
+                System.out.println("      Got it. I've added this task:");
+                System.out.println("        " + newTask.toString());
+                System.out.println("      Now you have " + counter + " tasks in the list.");
+                System.out.println("    -------------------------");
+
+            } else if (command.equals("event")) {
+                String[] eventParts = userText.split(" /from | /to ");
+                String description = eventParts[0].substring(6);
+                String from = eventParts[1];
+                String to = eventParts[2];
+                Task newTask = new Event(description, from, to);
+                textStorage[counter] = newTask;
+                counter++;
+
+                System.out.println("    -------------------------");
+                System.out.println("      Got it. I've added this task:");
+                System.out.println("        " + newTask.toString());
+                System.out.println("      Now you have " + counter + " tasks in the list.");
+                System.out.println("    -------------------------");
+
             } else {
                 System.out.println("    -------------------------");
-                System.out.println("        added: " + userText);
+                System.out.println("        Idk what that means! Use either todo deadline or event to create a task!");
                 System.out.println("    -------------------------");
-                textStorage[counter] = new Task(userText);
-                counter++;
             }
         }
         System.out.println("    -------------------------");
