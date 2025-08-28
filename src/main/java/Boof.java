@@ -1,11 +1,12 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Boof {
     public static void main(String[] args) {
         String userText;
-        Task[] textStorage = new Task[100];
-        int counter = 0;
         Scanner scanner = new Scanner(System.in);
+        Storage storage = new Storage("./data/boof.txt");
+        ArrayList<Task> tasks = storage.load();
 
         System.out.println(
                 "Hello! I'm Boof\n" +
@@ -21,16 +22,16 @@ public class Boof {
 
             } else if (userText.equals("list")) {
                 System.out.println("    ------- Your List -------");
-                for (int i = 0; i < counter; i++) {
-                    System.out.printf("     %d.%s\n", i + 1, textStorage[i].toString());
+                for (int i = 0; i < tasks.size(); i++) {
+                    System.out.printf("     %d.%s\n", i + 1, tasks.get(i).toString());
                 }
                 System.out.println("    -------------------------");
 
             } else if (command.equals("mark")) {
                 int taskIndex = Integer.parseInt(parts[1]) - 1;
-                Task t = textStorage[taskIndex];
-                
+                Task t = tasks.get(taskIndex);
                 t.markAsDone();
+                storage.save(tasks);
                 System.out.println("    -------------------------");
                 System.out.println("      Nice! I've marked this task as done:");
                 System.out.printf("        %s\n", t.toString());
@@ -38,14 +39,14 @@ public class Boof {
 
             } else if (command.equals("unmark")) {
                 int taskIndex = Integer.parseInt(parts[1]) - 1;
-                Task t = textStorage[taskIndex];
-
+                Task t = tasks.get(taskIndex);
                 t.unmarkAsDone();
+                storage.save(tasks);
                 System.out.println("    -------------------------");
                 System.out.println("      OK, I've marked this task as not done yet:");
                 System.out.printf("        %s\n", t.toString());
                 System.out.println("    -------------------------");
-            
+
             } else if (command.equals("todo")) {
                 if (parts.length < 2) {
                     System.out.println("    -------------------------");
@@ -55,13 +56,12 @@ public class Boof {
                 }
                 String description = userText.substring(5);
                 Task newTask = new Todo(description);
-                textStorage[counter] = newTask;
-                counter++;
-                
+                tasks.add(newTask);
+                storage.save(tasks);
                 System.out.println("    -------------------------");
                 System.out.println("      Got it. I've added this task:");
                 System.out.println("        " + newTask.toString());
-                System.out.println("      Now you have " + counter + " tasks in the list.");
+                System.out.println("      Now you have " + tasks.size() + " tasks in the list.");
                 System.out.println("    -------------------------");
 
             } else if (command.equals("deadline")) {
@@ -76,13 +76,12 @@ public class Boof {
                 String description = deadlineParts[0].substring(9);
                 String byDate = deadlineParts[1];
                 Task newTask = new Deadline(description, byDate);
-                textStorage[counter] = newTask;
-                counter++;
-                
+                tasks.add(newTask);
+                storage.save(tasks);
                 System.out.println("    -------------------------");
                 System.out.println("      Got it. I've added this task:");
                 System.out.println("        " + newTask.toString());
-                System.out.println("      Now you have " + counter + " tasks in the list.");
+                System.out.println("      Now you have " + tasks.size() + " tasks in the list.");
                 System.out.println("    -------------------------");
 
             } else if (command.equals("event")) {
@@ -93,18 +92,18 @@ public class Boof {
                     continue;
                 }
 
-                String[] eventParts = userText.split(" /from | /to ");
-                String description = eventParts[0].substring(6);
-                String from = eventParts[1];
-                String to = eventParts[2];
+                String[] eventSplit = userText.split(" /from ");
+                String description = eventSplit[0].substring(6);
+                String[] fromTo = eventSplit[1].split(" /to ");
+                String from = fromTo[0];
+                String to = fromTo.length > 1 ? fromTo[1] : "";
                 Task newTask = new Event(description, from, to);
-                textStorage[counter] = newTask;
-                counter++;
-
+                tasks.add(newTask);
+                storage.save(tasks);
                 System.out.println("    -------------------------");
                 System.out.println("      Got it. I've added this task:");
                 System.out.println("        " + newTask.toString());
-                System.out.println("      Now you have " + counter + " tasks in the list.");
+                System.out.println("      Now you have " + tasks.size() + " tasks in the list.");
                 System.out.println("    -------------------------");
 
             } else if (command.equals("delete")) {
@@ -115,26 +114,20 @@ public class Boof {
                     continue;
                 }
                 int taskIndex = Integer.parseInt(parts[1]) - 1;
-                if (taskIndex < 0 || taskIndex >= counter) {
+                if (taskIndex < 0 || taskIndex >= tasks.size()) {
                     System.out.println("    -------------------------");
                     System.out.println("      OOPS!!! Task number does not exist.");
                     System.out.println("    -------------------------");
                     continue;
                 }
 
-                Task deletedTask = textStorage[taskIndex];
-                for (int i = taskIndex; i < counter - 1; i++) {
-                    textStorage[i] = textStorage[i + 1];
-                }
-                textStorage[counter - 1] = null; 
-                counter--;
-
+                Task deletedTask = tasks.remove(taskIndex);
+                storage.save(tasks);
                 System.out.println("    -------------------------");
                 System.out.println("      Noted. I've removed this task:");
                 System.out.println("        " + deletedTask.toString());
-                System.out.println("      Now you have " + counter + " tasks in the list.");
+                System.out.println("      Now you have " + tasks.size() + " tasks in the list.");
                 System.out.println("    -------------------------");
-
 
             } else {
                 System.out.println("    -------------------------");
@@ -146,6 +139,5 @@ public class Boof {
         System.out.println("      Bye. Hope to see you again soon!");
         System.out.println("    -------------------------");
         scanner.close();
-
     }
 }
