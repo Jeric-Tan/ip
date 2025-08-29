@@ -3,6 +3,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Represents a deadline which extends from the task class.
+ */
 public class Deadline extends Task {
   private LocalDateTime byDateTime;
   private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd[ HHmm][ HH:mm]");
@@ -13,14 +16,27 @@ public class Deadline extends Task {
     this.byDateTime = parseDateTime(byDate);
   }
 
+  /**
+   * Returns the deadline date and time.
+   * @return the deadline date and time
+   */
   public LocalDateTime getByDateTime() {
     return byDateTime;
   }
 
+  /**
+   * Returns the deadline date as a formatted string.
+   * @return the deadline date as a formatted string
+   */
   public String getByDate() {
     return byDateTime.format(INPUT_FORMAT);
   }
 
+  /**
+   * Parses the input string into a LocalDateTime object.
+   * @param input the input string to parse
+   * @return the parsed LocalDateTime object
+   */
   private static LocalDateTime parseDateTime(String input) {
     String[] patterns = {
       "yyyy-MM-dd HHmm", "yyyy-MM-dd HH:mm", "yyyy-MM-dd", "d/M/yyyy HHmm", "d/M/yyyy HH:mm", "d/M/yyyy"

@@ -1,4 +1,8 @@
 package boof.task;
+
+/**
+ * Represents an event which extends from the task class.
+ */
 public class Event extends Task {
   private String from;
   private String to;
@@ -9,10 +13,18 @@ public class Event extends Task {
     this.to = to;
   }
 
+  /**
+   * Returns the starting time of the event.
+   * @return the starting time of the event
+   */
   public String getFrom() {
     return from;
   }
 
+  /**
+   * Returns the ending time of the event.
+   * @return the ending time of the event
+   */
   public String getTo() {
     return to;
   }
