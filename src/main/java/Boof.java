@@ -72,17 +72,31 @@ public class Boof {
                     continue;
                 }
 
-                String[] deadlineParts = userText.split(" /by ");
+                String[] deadlineParts = userText.split(" /by ", 2);
+                if (deadlineParts.length < 2) {
+                    System.out.println("    -------------------------");
+                    System.out.println(
+                            "      OOPS!!! Please specify a /by date in the correct format (e.g., 2019-10-15 1800).");
+                    System.out.println("    -------------------------");
+                    continue;
+                }
                 String description = deadlineParts[0].substring(9);
                 String byDate = deadlineParts[1];
-                Task newTask = new Deadline(description, byDate);
-                tasks.add(newTask);
-                storage.save(tasks);
-                System.out.println("    -------------------------");
-                System.out.println("      Got it. I've added this task:");
-                System.out.println("        " + newTask.toString());
-                System.out.println("      Now you have " + tasks.size() + " tasks in the list.");
-                System.out.println("    -------------------------");
+                try {
+                    Task newTask = new Deadline(description, byDate);
+                    tasks.add(newTask);
+                    storage.save(tasks);
+                    System.out.println("    -------------------------");
+                    System.out.println("      Got it. I've added this task:");
+                    System.out.println("        " + newTask.toString());
+                    System.out.println("      Now you have " + tasks.size() + " tasks in the list.");
+                    System.out.println("    -------------------------");
+                } catch (Exception e) {
+                    System.out.println("    -------------------------");
+                    System.out
+                            .println("      OOPS!!! Invalid date format. Please use yyyy-MM-dd HHmm or d/M/yyyy HHmm.");
+                    System.out.println("    -------------------------");
+                }
 
             } else if (command.equals("event")) {
                 if (parts.length < 2) {

@@ -1,17 +1,47 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Deadline extends Task {
-  private String byDate;
+  private LocalDateTime byDateTime;
+  private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd[ HHmm][ HH:mm]");
+  private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy HHmm");
 
   public Deadline(String description, String byDate) {
     super(description);
-    this.byDate = byDate;
+    this.byDateTime = parseDateTime(byDate);
+  }
+
+  public LocalDateTime getByDateTime() {
+    return byDateTime;
   }
 
   public String getByDate() {
-    return byDate;
+    return byDateTime.format(INPUT_FORMAT);
+  }
+
+  private static LocalDateTime parseDateTime(String input) {
+    String[] patterns = {
+      "yyyy-MM-dd HHmm", "yyyy-MM-dd HH:mm", "yyyy-MM-dd", "d/M/yyyy HHmm", "d/M/yyyy HH:mm", "d/M/yyyy"
+    };
+
+    for (String pattern : patterns) {
+      try {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        if (pattern.contains("HH")) {
+          return LocalDateTime.parse(input, formatter);
+        } else {
+          return LocalDateTime.parse(input + " 0000", DateTimeFormatter.ofPattern(pattern + " HHmm"));
+        }
+      } catch (DateTimeParseException e) {
+      }
+    }
+    
+    return LocalDateTime.now();
   }
 
   @Override
   public String toString() {
-    return "[D][" + getStatusIcon() + "] " + description + " (by: " + byDate + ")";
+    return "[D][" + getStatusIcon() + "] " + description + " (by: " + byDateTime.format(OUTPUT_FORMAT) + ")";
   }
 }

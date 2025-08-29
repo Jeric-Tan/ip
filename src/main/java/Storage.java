@@ -23,20 +23,22 @@ public class Storage {
                 boolean isDone = parts[1].equals("1");
                 String description = parts[2];
                 switch (type) {
-                    case "T":
+                    case "T": {
                         Task todo = new Todo(description);
                         if (isDone)
                             todo.markAsDone();
                         tasks.add(todo);
                         break;
-                    case "D":
+                    }
+                    case "D": {
                         String by = parts[3];
                         Task deadline = new Deadline(description, by);
                         if (isDone)
                             deadline.markAsDone();
                         tasks.add(deadline);
                         break;
-                    case "E":
+                    }
+                    case "E": {
                         String[] eventParts = parts[3].split(" ", 2);
                         String from = eventParts[0];
                         String to = eventParts.length > 1 ? eventParts[1] : "";
@@ -45,12 +47,14 @@ public class Storage {
                             event.markAsDone();
                         tasks.add(event);
                         break;
+                    }
                     default:
                         break;
                 }
 
             }
-        } catch (IOException e) {}
+        } catch (IOException e) {
+        }
         return tasks;
     }
 
@@ -74,7 +78,10 @@ public class Storage {
             return String.format("%s | %s | %s", type, status, task.description);
         } else if (task instanceof Deadline) {
             type = "D";
-            return String.format("%s | %s | %s | %s", type, status, task.description, ((Deadline) task).getByDate());
+            // Save in yyyy-MM-dd HHmm format for consistency
+            Deadline d = (Deadline) task;
+            String dateStr = d.getByDateTime().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"));
+            return String.format("%s | %s | %s | %s", type, status, task.description, dateStr);
         } else if (task instanceof Event) {
             type = "E";
             return String.format("%s | %s | %s | %s %s", type, status, task.description, ((Event) task).getFrom(),
