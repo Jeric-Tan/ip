@@ -8,14 +8,14 @@ public class TaskList {
   private ArrayList<Task> tasks;
 
   /**
-   * Creates a new Empty TaskList.
+   * Constructor which creates a new empty TaskList.
    */
   public TaskList() {
     this.tasks = new ArrayList<>();
   }
 
   /**
-   * Creates a new TaskList with the specified tasks.
+   * Constructor which creates a new TaskList with the specified tasks.
    * @param tasks the tasks to include in the list
    */
   public TaskList(ArrayList<Task> tasks) {

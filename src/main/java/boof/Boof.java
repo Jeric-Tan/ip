@@ -9,11 +9,18 @@ import boof.task.TaskList;
 import boof.task.Todo;
 import boof.ui.Ui;
 
+/**
+ * The main class.
+ */
 public class Boof {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
 
+    /**
+     * Constructor which creates a new Boof instance.
+     * @param filePath the file path for storage
+     */
     public Boof(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -25,6 +32,9 @@ public class Boof {
         }
     }
 
+    /**
+     * Starts the main program loop. The loop uses the UI, storage, and task list.
+     */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;

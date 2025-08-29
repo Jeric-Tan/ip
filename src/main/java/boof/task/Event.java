@@ -7,6 +7,12 @@ public class Event extends Task {
   private String from;
   private String to;
 
+  /**
+   * Constructor which creates a new event.
+   * @param description the description of the event
+   * @param from the starting time of the event
+   * @param to the ending time of the event
+   */
   public Event(String description, String from, String to) {
     super(description);
     this.from = from;

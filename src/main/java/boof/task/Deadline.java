@@ -11,6 +11,11 @@ public class Deadline extends Task {
   private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd[ HHmm][ HH:mm]");
   private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy HHmm");
 
+  /**
+   * Constructor which creates a new deadline.
+   * @param description the description of the deadline
+   * @param byDate the deadline date
+   */
   public Deadline(String description, String byDate) {
     super(description);
     this.byDateTime = parseDateTime(byDate);
