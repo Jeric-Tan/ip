@@ -1,4 +1,4 @@
-package task;
+package boof.task;
 public class Event extends Task {
   private String from;
   private String to;

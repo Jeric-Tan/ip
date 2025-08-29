@@ -1,4 +1,4 @@
-package ui;
+package boof.ui;
 import java.util.Scanner;
 
 /**

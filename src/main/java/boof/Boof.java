@@ -1,11 +1,13 @@
-import parser.Parser;
-import storage.Storage;
-import task.Deadline;
-import task.Event;
-import task.Task;
-import task.TaskList;
-import task.Todo;
-import ui.Ui;
+package boof;
+
+import boof.parser.Parser;
+import boof.storage.Storage;
+import boof.task.Deadline;
+import boof.task.Event;
+import boof.task.Task;
+import boof.task.TaskList;
+import boof.task.Todo;
+import boof.ui.Ui;
 
 public class Boof {
     private Storage storage;
