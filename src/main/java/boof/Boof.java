@@ -33,6 +33,31 @@ public class Boof {
             Parser.CommandType commandType = Parser.getCommandType(userText);
             try {
                 switch (commandType) {
+                    case FIND: {
+                        String[] parts = userText.split(" ", 2);
+                        if (parts.length < 2 || parts[1].trim().isEmpty()) {
+                            ui.displayLine();
+                            ui.showMessage("      OOPS!!! Please provide a keyword to find.");
+                            ui.displayLine();
+                            break;
+                        }
+                        String keyword = parts[1].trim().toLowerCase();
+                        ui.displayLine();
+                        ui.showMessage("     Here are the matching tasks in your list:");
+                        int count = 1;
+                        for (int i = 0; i < tasks.size(); i++) {
+                            Task t = tasks.get(i);
+                            if (t.getDescription().toLowerCase().contains(keyword)) {
+                                ui.showMessage("     " + count + "." + t.toString());
+                                count++;
+                            }
+                        }
+                        if (count == 1) {
+                            ui.showMessage("     (No matching tasks found)");
+                        }
+                        ui.displayLine();
+                        break;
+                    }
                     case BYE:
                         isExit = true;
                         ui.showExit();

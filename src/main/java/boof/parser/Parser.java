@@ -2,7 +2,7 @@ package boof.parser;
 
 public class Parser {
   public enum CommandType {
-    BYE, LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, UNKNOWN
+    BYE, LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, FIND, UNKNOWN
   }
 
   public static CommandType getCommandType(String input) {
@@ -26,6 +26,8 @@ public class Parser {
       return CommandType.EVENT;
     } else if (command.startsWith("delete ")) {
       return CommandType.DELETE;
+    } else if (command.startsWith("find ")) {
+      return CommandType.FIND;
     } else {
       return CommandType.UNKNOWN;
     }
