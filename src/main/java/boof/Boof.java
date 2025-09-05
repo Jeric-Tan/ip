@@ -19,6 +19,7 @@ public class Boof {
 
     /**
      * Constructor which creates a new Boof instance.
+     *
      * @param filePath the file path for storage
      */
     public Boof(String filePath) {
@@ -43,127 +44,127 @@ public class Boof {
             Parser.CommandType commandType = Parser.getCommandType(userText);
             try {
                 switch (commandType) {
-                    case FIND: {
-                        String[] parts = userText.split(" ", 2);
-                        if (parts.length < 2 || parts[1].trim().isEmpty()) {
-                            ui.displayLine();
-                            ui.showMessage("      OOPS!!! Please provide a keyword to find.");
-                            ui.displayLine();
-                            break;
+                case FIND: {
+                    String[] parts = userText.split(" ", 2);
+                    if (parts.length < 2 || parts[1].trim().isEmpty()) {
+                        ui.displayLine();
+                        ui.showMessage("      OOPS!!! Please provide a keyword to find.");
+                        ui.displayLine();
+                        break;
+                    }
+                    String keyword = parts[1].trim().toLowerCase();
+                    ui.displayLine();
+                    ui.showMessage("     Here are the matching tasks in your list:");
+                    int count = 1;
+                    for (int i = 0; i < tasks.size(); i++) {
+                        Task t = tasks.get(i);
+                        if (t.getDescription().toLowerCase().contains(keyword)) {
+                            ui.showMessage("     " + count + "." + t.toString());
+                            count++;
                         }
-                        String keyword = parts[1].trim().toLowerCase();
+                    }
+                    if (count == 1) {
+                        ui.showMessage("     (No matching tasks found)");
+                    }
+                    ui.displayLine();
+                    break;
+                }
+                case BYE:
+                    isExit = true;
+                    ui.showExit();
+                    break;
+                case LIST:
+                    ui.showMessage("    ------- Your List -------");
+                    for (int i = 0; i < tasks.size(); i++) {
+                        ui.showMessage("     " + (i + 1) + "." + tasks.get(i).toString());
+                    }
+                    ui.displayLine();
+                    break;
+                case MARK: {
+                    int taskIndex = Parser.parseIndex(userText) - 1;
+                    Task t = tasks.get(taskIndex);
+                    t.markAsDone();
+                    storage.save(tasks.getAll());
+                    ui.displayLine();
+                    ui.showMessage("      Nice! I've marked this task as done:");
+                    ui.showMessage("        " + t.toString());
+                    ui.displayLine();
+                    break;
+                }
+                case UNMARK: {
+                    int taskIndex = Parser.parseIndex(userText) - 1;
+                    Task t = tasks.get(taskIndex);
+                    t.unmarkAsDone();
+                    storage.save(tasks.getAll());
+                    ui.displayLine();
+                    ui.showMessage("      OK, I've marked this task as not done yet:");
+                    ui.showMessage("        " + t.toString());
+                    ui.displayLine();
+                    break;
+                }
+                case TODO: {
+                    String description = Parser.parseTodoDescription(userText);
+                    Task newTask = new Todo(description);
+                    tasks.add(newTask);
+                    storage.save(tasks.getAll());
+                    ui.displayLine();
+                    ui.showMessage("      Got it. I've added this task:");
+                    ui.showMessage("        " + newTask.toString());
+                    ui.showMessage("      Now you have " + tasks.size() + " tasks in the list.");
+                    ui.displayLine();
+                    break;
+                }
+                case DEADLINE: {
+                    String[] deadlineParts = Parser.parseDeadlineCommand(userText);
+                    String description = deadlineParts[0];
+                    String byDate = deadlineParts[1];
+                    Task newTask = new Deadline(description, byDate);
+                    tasks.add(newTask);
+                    storage.save(tasks.getAll());
+                    ui.displayLine();
+                    ui.showMessage("      Got it. I've added this task:");
+                    ui.showMessage("        " + newTask.toString());
+                    ui.showMessage("      Now you have " + tasks.size() + " tasks in the list.");
+                    ui.displayLine();
+                    break;
+                }
+                case EVENT: {
+                    String[] eventParts = Parser.parseEventCommand(userText);
+                    String description = eventParts[0];
+                    String from = eventParts[1];
+                    String to = eventParts[2];
+                    Task newTask = new Event(description, from, to);
+                    tasks.add(newTask);
+                    storage.save(tasks.getAll());
+                    ui.displayLine();
+                    ui.showMessage("      Got it. I've added this task:");
+                    ui.showMessage("        " + newTask.toString());
+                    ui.showMessage("      Now you have " + tasks.size() + " tasks in the list.");
+                    ui.displayLine();
+                    break;
+                }
+                case DELETE: {
+                    int taskIndex = Parser.parseIndex(userText) - 1;
+                    if (taskIndex < 0 || taskIndex >= tasks.size()) {
                         ui.displayLine();
-                        ui.showMessage("     Here are the matching tasks in your list:");
-                        int count = 1;
-                        for (int i = 0; i < tasks.size(); i++) {
-                            Task t = tasks.get(i);
-                            if (t.getDescription().toLowerCase().contains(keyword)) {
-                                ui.showMessage("     " + count + "." + t.toString());
-                                count++;
-                            }
-                        }
-                        if (count == 1) {
-                            ui.showMessage("     (No matching tasks found)");
-                        }
+                        ui.showMessage("      OOPS!!! Task number does not exist.");
                         ui.displayLine();
                         break;
                     }
-                    case BYE:
-                        isExit = true;
-                        ui.showExit();
-                        break;
-                    case LIST:
-                        ui.showMessage("    ------- Your List -------");
-                        for (int i = 0; i < tasks.size(); i++) {
-                            ui.showMessage("     " + (i + 1) + "." + tasks.get(i).toString());
-                        }
-                        ui.displayLine();
-                        break;
-                    case MARK: {
-                        int taskIndex = Parser.parseIndex(userText) - 1;
-                        Task t = tasks.get(taskIndex);
-                        t.markAsDone();
-                        storage.save(tasks.getAll());
-                        ui.displayLine();
-                        ui.showMessage("      Nice! I've marked this task as done:");
-                        ui.showMessage("        " + t.toString());
-                        ui.displayLine();
-                        break;
-                    }
-                    case UNMARK: {
-                        int taskIndex = Parser.parseIndex(userText) - 1;
-                        Task t = tasks.get(taskIndex);
-                        t.unmarkAsDone();
-                        storage.save(tasks.getAll());
-                        ui.displayLine();
-                        ui.showMessage("      OK, I've marked this task as not done yet:");
-                        ui.showMessage("        " + t.toString());
-                        ui.displayLine();
-                        break;
-                    }
-                    case TODO: {
-                        String description = Parser.parseTodoDescription(userText);
-                        Task newTask = new Todo(description);
-                        tasks.add(newTask);
-                        storage.save(tasks.getAll());
-                        ui.displayLine();
-                        ui.showMessage("      Got it. I've added this task:");
-                        ui.showMessage("        " + newTask.toString());
-                        ui.showMessage("      Now you have " + tasks.size() + " tasks in the list.");
-                        ui.displayLine();
-                        break;
-                    }
-                    case DEADLINE: {
-                        String[] deadlineParts = Parser.parseDeadlineCommand(userText);
-                        String description = deadlineParts[0];
-                        String byDate = deadlineParts[1];
-                        Task newTask = new Deadline(description, byDate);
-                        tasks.add(newTask);
-                        storage.save(tasks.getAll());
-                        ui.displayLine();
-                        ui.showMessage("      Got it. I've added this task:");
-                        ui.showMessage("        " + newTask.toString());
-                        ui.showMessage("      Now you have " + tasks.size() + " tasks in the list.");
-                        ui.displayLine();
-                        break;
-                    }
-                    case EVENT: {
-                        String[] eventParts = Parser.parseEventCommand(userText);
-                        String description = eventParts[0];
-                        String from = eventParts[1];
-                        String to = eventParts[2];
-                        Task newTask = new Event(description, from, to);
-                        tasks.add(newTask);
-                        storage.save(tasks.getAll());
-                        ui.displayLine();
-                        ui.showMessage("      Got it. I've added this task:");
-                        ui.showMessage("        " + newTask.toString());
-                        ui.showMessage("      Now you have " + tasks.size() + " tasks in the list.");
-                        ui.displayLine();
-                        break;
-                    }
-                    case DELETE: {
-                        int taskIndex = Parser.parseIndex(userText) - 1;
-                        if (taskIndex < 0 || taskIndex >= tasks.size()) {
-                            ui.displayLine();
-                            ui.showMessage("      OOPS!!! Task number does not exist.");
-                            ui.displayLine();
-                            break;
-                        }
-                        Task deletedTask = tasks.remove(taskIndex);
-                        storage.save(tasks.getAll());
-                        ui.displayLine();
-                        ui.showMessage("      Noted. I've removed this task:");
-                        ui.showMessage("        " + deletedTask.toString());
-                        ui.showMessage("      Now you have " + tasks.size() + " tasks in the list.");
-                        ui.displayLine();
-                        break;
-                    }
-                    default:
-                        ui.displayLine();
-                        ui.showMessage(
-                                "        Idk what that means! Use either todo deadline or event to create a task!");
-                        ui.displayLine();
+                    Task deletedTask = tasks.remove(taskIndex);
+                    storage.save(tasks.getAll());
+                    ui.displayLine();
+                    ui.showMessage("      Noted. I've removed this task:");
+                    ui.showMessage("        " + deletedTask.toString());
+                    ui.showMessage("      Now you have " + tasks.size() + " tasks in the list.");
+                    ui.displayLine();
+                    break;
+                }
+                default:
+                    ui.displayLine();
+                    ui.showMessage(
+                            "        Idk what that means! Use either todo deadline or event to create a task!");
+                    ui.displayLine();
                 }
             } catch (Exception e) {
                 ui.displayLine();
