@@ -33,17 +33,19 @@ public class Ui {
     /**
      * Displays a welcome message in the UI to the user.
      */
-    public void showWelcome() {
-        System.out.println("Hello! I'm Boof\nWhat can I do for you?\n");
+    public String showWelcome() {
+        return "Hello! I'm Boof\nWhat can I do for you?\n"
+            + "Please enter your commands (todo, deadline, event, list, mark, unmark, delete)";
     }
 
     /**
      * Displays an exit message in the UI to the user.
      */
-    public void showExit() {
+    public String showExit() {
         displayLine();
-        System.out.println("      Bye. Hope to see you again soon!");
+        String message = "      Bye. Hope to see you again soon!";
         displayLine();
+        return message;
     }
 
     /**
