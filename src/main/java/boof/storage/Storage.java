@@ -23,7 +23,7 @@ public class Storage {
 
     /**
      * Loads tasks from the storage file.
-     * 
+     *
      * @return A list of tasks loaded from the file.
      */
     public ArrayList<Task> load() {
@@ -43,44 +43,49 @@ public class Storage {
                     boolean isDone = parts[1].equals("1");
                     String description = parts[2];
                     switch (type) {
-                        case "T": {
-                            Task todo = new Todo(description);
-                            if (isDone)
-                                todo.markAsDone();
-                            tasks.add(todo);
-                            break;
+                    case "T": {
+                        Task todo = new Todo(description);
+                        if (isDone) {
+                            todo.markAsDone();
                         }
-                        case "D": {
-                            String by = parts[3];
-                            Task deadline = new Deadline(description, by);
-                            if (isDone)
-                                deadline.markAsDone();
-                            tasks.add(deadline);
-                            break;
+                        tasks.add(todo);
+                        break;
+                    }
+                    case "D": {
+                        String by = parts[3];
+                        Task deadline = new Deadline(description, by);
+                        if (isDone) {
+                            deadline.markAsDone();
                         }
-                        case "E": {
-                            String[] eventParts = parts[3].split(" ", 2);
-                            String from = eventParts[0];
-                            String to = eventParts.length > 1 ? eventParts[1] : "";
-                            Task event = new Event(description, from, to);
-                            if (isDone)
-                                event.markAsDone();
-                            tasks.add(event);
-                            break;
+                        tasks.add(deadline);
+                        break;
+                    }
+                    case "E": {
+                        String[] eventParts = parts[3].split(" ", 2);
+                        String from = eventParts[0];
+                        String to = eventParts.length > 1 ? eventParts[1] : "";
+                        Task event = new Event(description, from, to);
+                        if (isDone) {
+                            event.markAsDone();
                         }
-                        default:
-                            break;
+                        tasks.add(event);
+                        break;
+                    }
+                    default:
+                        break;
                     }
                 }
             }
             scanner.close();
         } catch (IOException e) {
+            System.err.println("Error loading tasks from file: " + e.getMessage());
         }
         return tasks;
     }
 
     /**
      * Saves the given tasks to the storage file in data/.
+     *
      * @param tasks
      */
     public void save(ArrayList<Task> tasks) {
@@ -91,11 +96,13 @@ public class Storage {
                 fw.write(taskToFileString(task) + System.lineSeparator());
             }
         } catch (IOException e) {
+            System.err.println("Error saving tasks to file: " + e.getMessage());
         }
     }
 
     /**
      * Converts a task to its string representation for saving to file.
+     *
      * @param task the task to convert
      * @return formatted string or empty string if task is null
      */
@@ -112,8 +119,12 @@ public class Storage {
             return String.format("%s | %s | %s | %s", type, status, task.getDescription(), dateStr);
         } else if (task instanceof Event) {
             type = "E";
-            return String.format("%s | %s | %s | %s %s", type, status, task.getDescription(), ((Event) task).getFrom(),
-                    ((Event) task).getTo());
+            return String.format("%s | %s | %s | %s %s",
+                type,
+                status,
+                task.getDescription(), (
+                (Event) task).getFrom(), (
+                (Event) task).getTo());
         }
         return "";
     }

@@ -9,6 +9,7 @@ public class Task {
 
     /**
      * Constructor which creates a new task.
+     *
      * @param description the description of the task
      */
     public Task(String description) {
@@ -18,6 +19,7 @@ public class Task {
 
     /**
      * Returns the description of the task.
+     *
      * @return the description of the task
      */
     public String getDescription() {
@@ -26,6 +28,7 @@ public class Task {
 
     /**
      * Returns the completion status of the task.
+     *
      * @return true if the task is done, false otherwise
      */
     public boolean isDone() {
@@ -34,6 +37,7 @@ public class Task {
 
     /**
      * Returns the status icon of the task.
+     *
      * @return "X" if the task is done, " " otherwise
      */
     public String getStatusIcon() {
@@ -44,17 +48,17 @@ public class Task {
      * Marks the task as done.
      */
     public void markAsDone() {
-      this.isDone = true;
+        this.isDone = true;
     }
 
     /**
      * Marks the task as not done.
      */
     public void unmarkAsDone() {
-      this.isDone = false;
+        this.isDone = false;
     }
-    
+
     public String toString() {
-      return description;
+        return description;
     }
 }
