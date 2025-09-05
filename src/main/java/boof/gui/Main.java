@@ -1,5 +1,6 @@
 package boof.gui;
 
+import boof.Boof;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 
 /**
  * Main class to launch the JavaFX application.
@@ -22,11 +24,13 @@ public class Main extends Application {
     private Button sendButton;
     private Scene scene;
 
+    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
+    private Image boofImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+    private Boof boof = new Boof();
+
     @Override
     public void start(Stage stage) {
         // Setting up required components
-        Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-        Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
 
         scrollPane = new ScrollPane();
         dialogContainer = new VBox();
@@ -34,9 +38,6 @@ public class Main extends Application {
 
         userInput = new TextField();
         sendButton = new Button("Send");
-
-        DialogBox dialogBox = new DialogBox("Hello!", userImage);
-        dialogContainer.getChildren().addAll(dialogBox);
 
         AnchorPane mainLayout = new AnchorPane();
         mainLayout.getChildren().addAll(scrollPane, userInput, sendButton);
@@ -75,6 +76,31 @@ public class Main extends Application {
 
         AnchorPane.setLeftAnchor(userInput, 1.0);
         AnchorPane.setBottomAnchor(userInput, 1.0);
-        // More code to be added here later
+
+        // Handling user input
+        sendButton.setOnMouseClicked((event) -> {
+            handleUserInput();
+        });
+        userInput.setOnAction((event) -> {
+            handleUserInput();
+        });
+
+        // Scroll down to the end every time dialogContainer's height changes.
+        dialogContainer.heightProperty().addListener((observable) -> scrollPane.setVvalue(1.0));
+    }
+
+    /**
+     * Creates a dialog box containing user input, and appends it to
+     * the dialog container. Clears the user input after processing.
+     */
+    private void handleUserInput() {
+        String userText = userInput.getText();
+        String boofText = boof.getResponse(userInput.getText());
+        dialogContainer.getChildren().addAll(
+                DialogBox.getUserDialog(userText, userImage),
+                DialogBox.getDukeDialog(boofText, boofImage)
+        );
+        userInput.clear();
     }
 }
+

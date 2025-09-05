@@ -22,6 +22,15 @@ public class Boof {
      *
      * @param filePath the file path for storage
      */
+    public Boof() {
+        this("./data/boof.txt");
+    }
+
+    /**
+     * Constructor which creates a new Boof instance with the specified file path.
+     *
+     * @param filePath the file path for storage
+     */
     public Boof(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -176,5 +185,12 @@ public class Boof {
 
     public static void main(String[] args) {
         new Boof("./data/boof.txt").run();
+    }
+
+    /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String input) {
+        return "Boof heard: " + input;
     }
 }
