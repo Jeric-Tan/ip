@@ -1,5 +1,16 @@
 package boof.parser;
 
+import boof.command.ByeCommand;
+import boof.command.Command;
+import boof.command.DeadlineCommand;
+import boof.command.DeleteCommand;
+import boof.command.EventCommand;
+import boof.command.FindCommand;
+import boof.command.ListCommand;
+import boof.command.MarkCommand;
+import boof.command.TodoCommand;
+import boof.command.UnmarkCommand;
+
 /**
  * Parses user input into command types and parameters.
  */
@@ -46,6 +57,48 @@ public class Parser {
     }
 
     /**
+     * Parses the user input and returns the corresponding Command object.
+     *
+     * @param input the user input
+     * @return the corresponding Command object
+     * @throws IllegalArgumentException if the command is unknown or parameters are invalid
+     * @throws NumberFormatException    if an index parameter is not a valid number
+     */
+    public static Command parse(String input) throws IllegalArgumentException, NumberFormatException {
+        CommandType commandType = getCommandType(input);
+        switch (commandType) {
+        case BYE:
+            return new ByeCommand();
+        case LIST:
+            return new ListCommand();
+        case MARK:
+            int markIndex = parseIndex(input) - 1;
+            return new MarkCommand(markIndex);
+        case UNMARK:
+            int unmarkIndex = parseIndex(input) - 1;
+            return new UnmarkCommand(unmarkIndex);
+        case TODO:
+            String todoDescription = parseArgument(input, 5, "The description of a todo cannot be empty.");
+            return new TodoCommand(todoDescription);
+        case DEADLINE:
+            String[] deadlineParts = parseDeadlineCommand(input);
+            return new DeadlineCommand(deadlineParts[0], deadlineParts[1]);
+        case EVENT:
+            String[] eventParts = parseEventCommand(input);
+            return new EventCommand(eventParts[0], eventParts[1], eventParts[2]);
+        case DELETE:
+            int deleteIndex = parseIndex(input) - 1;
+            return new DeleteCommand(deleteIndex);
+        case FIND:
+            String findKeyword = parseArgument(input, 5, "The keyword for find cannot be empty.");
+            return new FindCommand(findKeyword);
+        default:
+            throw new IllegalArgumentException("I don't know what that means.");
+        }
+    }
+
+
+    /**
      * Parses the index from the user input.
      *
      * @param input the user input
@@ -60,18 +113,19 @@ public class Parser {
         return Integer.parseInt(parts[1].trim());
     }
 
+
     /**
      * Parses the description of a todo from the user input.
      *
      * @param input the user input
-     * @return the todo description
+     * @return the description
      * @throws IllegalArgumentException if the description is empty
      */
-    public static String parseTodoDescription(String input) throws IllegalArgumentException {
-        if (input.length() <= 4 || input.substring(5).trim().isEmpty()) {
-            throw new IllegalArgumentException("The description of a todo cannot be empty.");
+    private static String parseArgument(String input, int commandLength, String errorMessage) {
+        if (input.length() <= commandLength || input.substring(commandLength).trim().isEmpty()) {
+            throw new IllegalArgumentException(errorMessage);
         }
-        return input.substring(5).trim();
+        return input.substring(commandLength).trim();
     }
 
     /**
