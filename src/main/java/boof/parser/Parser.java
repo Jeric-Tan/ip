@@ -36,7 +36,7 @@ public class Parser {
             return CommandType.UNKNOWN;
         }
         String command = input.toLowerCase().trim();
-        assert command != null;
+
         if (command.equals("bye")) {
             return CommandType.BYE;
         } else if (command.equals("list")) {
@@ -115,7 +115,6 @@ public class Parser {
         if (parts.length < 2) {
             throw new ParametersException(errorMessage);
         }
-        assert parts[1].trim() != null;
         try {
             return Integer.parseInt(parts[1].trim());
         } catch (NumberFormatException e) {
