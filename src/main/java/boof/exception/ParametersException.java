@@ -5,6 +5,6 @@ package boof.exception;
  */
 public class ParametersException extends BoofException {
     public ParametersException(String message) {
-        super("There is an issue with the parameters you have provided: " + message);
+        super("There is an issue with the parameters you have provided! " + message);
     }
 }
