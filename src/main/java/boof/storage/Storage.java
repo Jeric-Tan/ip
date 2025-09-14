@@ -37,43 +37,45 @@ public class Storage {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
-                if (!line.isEmpty()) {
-                    String[] parts = line.split(" \\| ");
-                    String type = parts[0];
-                    boolean isDone = parts[1].equals("1");
-                    String description = parts[2];
-                    switch (type) {
-                    case "T": {
-                        Task todo = new Todo(description);
-                        if (isDone) {
-                            todo.markAsDone();
-                        }
-                        tasks.add(todo);
-                        break;
+                if (line.isEmpty()) {
+                    continue;
+                }
+                String[] parts = line.split(" \\| ");
+                String type = parts[0];
+                boolean isDone = parts[1].equals("1");
+                String description = parts[2];
+                switch (type) {
+                case "T": {
+                    Task todo = new Todo(description);
+                    if (isDone) {
+                        todo.markAsDone();
                     }
-                    case "D": {
-                        String by = parts[3];
-                        Task deadline = new Deadline(description, by);
-                        if (isDone) {
-                            deadline.markAsDone();
-                        }
-                        tasks.add(deadline);
-                        break;
+                    tasks.add(todo);
+                    break;
+                }
+                case "D": {
+                    String by = parts[3];
+                    Task deadline = new Deadline(description, by);
+                    if (isDone) {
+                        deadline.markAsDone();
                     }
-                    case "E": {
-                        String[] eventParts = parts[3].split(" ", 2);
-                        String from = eventParts[0];
-                        String to = eventParts.length > 1 ? eventParts[1] : "";
-                        Task event = new Event(description, from, to);
-                        if (isDone) {
-                            event.markAsDone();
-                        }
-                        tasks.add(event);
-                        break;
+                    tasks.add(deadline);
+                    break;
+                }
+                case "E": {
+                    String[] eventParts = parts[3].split(" ", 2);
+                    String from = eventParts[0];
+                    String to = eventParts.length > 1 ? eventParts[1] : "";
+                    Task event = new Event(description, from, to);
+                    if (isDone) {
+                        event.markAsDone();
                     }
-                    default:
-                        break;
-                    }
+                    tasks.add(event);
+                    break;
+                }
+                default:
+                    System.err.println("Unknown task type: " + type);
+                    break;
                 }
             }
             scanner.close();
@@ -120,11 +122,9 @@ public class Storage {
         } else if (task instanceof Event) {
             type = "E";
             return String.format("%s | %s | %s | %s %s",
-                type,
-                status,
-                task.getDescription(), (
-                (Event) task).getFrom(), (
-                (Event) task).getTo());
+                    type,
+                    status,
+                    task.getDescription(), ((Event) task).getFrom(), ((Event) task).getTo());
         }
         return "";
     }
