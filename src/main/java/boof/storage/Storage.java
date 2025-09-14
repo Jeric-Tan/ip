@@ -31,7 +31,7 @@ public class Storage {
         File file = new File(filePath);
         if (!file.exists()) {
             file.getParentFile().mkdirs();
-            return tasks;
+            writeSampleData();
         }
         try {
             Scanner scanner = new Scanner(file);
@@ -130,5 +130,16 @@ public class Storage {
                     task.getDescription(), ((Event) task).getFrom(), ((Event) task).getTo());
         }
         return "";
+    }
+
+    /**
+     * Writes sample data to the storage file for initial testing.
+     */
+    private void writeSampleData() {
+        ArrayList<Task> sampleTasks = new ArrayList<>();
+        sampleTasks.add(new Todo("[SAMPLE] Read lecture slides"));
+        sampleTasks.add(new Deadline("[SAMPLE] Submit assignment 2", "2026-10-01 2359"));
+        sampleTasks.add(new Event("[SAMPLE] Team Project Meeting", "2025-09-30 1400", "2025-09-30 1500"));
+        saveTasks(sampleTasks);
     }
 }

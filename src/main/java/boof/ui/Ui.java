@@ -47,7 +47,7 @@ public class Ui {
      */
     public String showWelcome() {
         return "Hello! I'm Boof\nWhat can I do for you?\n"
-            + "Please enter your commands (todo, deadline, event, list, mark, unmark, delete)";
+            + "Please enter your command, or type 'help' to see available commands.";
     }
 
     /**
