@@ -44,6 +44,24 @@ public class TaskList {
     }
 
     /**
+     * Marks a task as done.
+     *
+     * @param index the index of the task to mark as done
+     */
+    public void markTask(int index) {
+        tasks.get(index).markAsDone();
+    }
+
+    /**
+    * Unmarks a task as not done.
+    *
+    * @param index the index of the task to unmark
+    */
+    public void unmarkTask(int index) {
+        tasks.get(index).unmarkAsDone();
+    }
+
+    /**
      * Returns a task from the list.
      *
      * @param index the index of the task to return
