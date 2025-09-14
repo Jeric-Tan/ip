@@ -1,7 +1,6 @@
 package boof.gui;
 
 import boof.Boof;
-import boof.ui.Ui;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;

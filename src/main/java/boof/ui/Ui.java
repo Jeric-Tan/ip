@@ -23,11 +23,23 @@ public class Ui {
     }
 
     /**
-     * Displays a horizontal line in the UI to the user.
+     * Displays message in the UI to the user.
+     * @param message
      */
+    public void showMessage(String message) {
+        System.out.println(message);
+    }
 
-    public void displayLine() {
-        System.out.println("    -------------------------");
+    /**
+     * Displays a message with a divider in the UI to the user.
+     * @param message
+     */
+    public String displayMessageWithDivider(String message) {
+        String s = "    -------------------------\n"
+            + message + "\n"
+            + "    -------------------------";
+        System.out.println(s);
+        return s;
     }
 
     /**
@@ -41,11 +53,8 @@ public class Ui {
     /**
      * Displays an exit message in the UI to the user.
      */
-    public String showExit() {
-        displayLine();
-        String message = "      Bye. Hope to see you again soon!";
-        displayLine();
-        return message;
+    public void showExit() {
+        displayMessageWithDivider("      Bye. Hope to see you again soon!");
     }
 
     /**
@@ -54,24 +63,7 @@ public class Ui {
      * @param message Shows the error message to the user
      */
     public void showError(String message) {
-        displayLine();
-        System.out.println("      OOPS!!! " + message);
-        displayLine();
-    }
-
-    /**
-     * Displays a loading error message in the UI to the user.
-     */
-    public void showLoadingError() {
-        showError("Error loading tasks from file.");
-    }
-
-    /**
-     * Displays a message in the UI to the user.
-     *
-     * @param message The message to be displayed
-     */
-    public void showMessage(String message) {
-        System.out.println(message);
+        displayMessageWithDivider("      OOPS!!! " + message);
     }
 }
+
