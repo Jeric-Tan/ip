@@ -41,6 +41,7 @@ public class Storage {
                     continue;
                 }
                 String[] parts = line.split(" \\| ");
+                assert parts.length >= 3;
                 String type = parts[0];
                 boolean isDone = parts[1].equals("1");
                 String description = parts[2];
@@ -54,6 +55,7 @@ public class Storage {
                     break;
                 }
                 case "D": {
+                    assert parts.length == 4;
                     String by = parts[3];
                     Task deadline = new Deadline(description, by);
                     if (isDone) {
@@ -63,6 +65,7 @@ public class Storage {
                     break;
                 }
                 case "E": {
+                    assert parts.length >= 4;
                     String[] eventParts = parts[3].split(" ", 2);
                     String from = eventParts[0];
                     String to = eventParts.length > 1 ? eventParts[1] : "";

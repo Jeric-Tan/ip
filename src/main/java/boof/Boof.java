@@ -33,6 +33,10 @@ public class Boof {
         storage = new Storage(filePath);
         ui = new Ui();
         tasks = new TaskList(storage.loadTasks());
+
+        assert storage != null;
+        assert tasks != null;
+        assert ui != null;
     }
 
     /**
