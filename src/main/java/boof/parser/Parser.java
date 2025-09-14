@@ -22,6 +22,7 @@ public class Parser {
             return CommandType.UNKNOWN;
         }
         String command = input.toLowerCase().trim();
+        assert command != null;
         if (command.equals("bye")) {
             return CommandType.BYE;
         } else if (command.equals("list")) {
@@ -57,6 +58,7 @@ public class Parser {
         if (parts.length < 2) {
             throw new NumberFormatException("No index provided");
         }
+        assert parts[1].trim() != null;
         return Integer.parseInt(parts[1].trim());
     }
 
@@ -71,6 +73,7 @@ public class Parser {
         if (input.length() <= 4 || input.substring(5).trim().isEmpty()) {
             throw new IllegalArgumentException("The description of a todo cannot be empty.");
         }
+        assert input.startsWith("todo ");
         return input.substring(5).trim();
     }
 
@@ -86,6 +89,7 @@ public class Parser {
         if (parts.length == 1 || parts[1].trim().isEmpty()) {
             throw new IllegalArgumentException("The description of a deadline cannot be empty.");
         }
+        assert parts.length > 1;
         String[] descriptionAndTime = parts[1].split("/by ", 2);
         String description = descriptionAndTime[0].trim();
         String byTime = descriptionAndTime.length > 1 ? descriptionAndTime[1].trim() : "";
@@ -107,6 +111,7 @@ public class Parser {
         if (parts.length == 1 || parts[1].trim().isEmpty()) {
             throw new IllegalArgumentException("The description of an event cannot be empty.");
         }
+        assert parts.length > 1;
         String[] descriptionAndTime = parts[1].split("/from ", 2);
         String description = descriptionAndTime[0].trim();
         String time = descriptionAndTime.length > 1 ? descriptionAndTime[1].trim() : "";
