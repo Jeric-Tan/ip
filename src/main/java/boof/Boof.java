@@ -49,6 +49,7 @@ public class Boof {
             String userText = ui.readCommand();
             String response = getResponse(userText);
             ui.showMessage(response);
+
             if (Parser.getCommandType(userText) == Parser.CommandType.BYE) {
                 isExit = true;
             }

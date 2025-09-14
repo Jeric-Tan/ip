@@ -6,6 +6,7 @@ import boof.command.DeadlineCommand;
 import boof.command.DeleteCommand;
 import boof.command.EventCommand;
 import boof.command.FindCommand;
+import boof.command.HelpCommand;
 import boof.command.ListCommand;
 import boof.command.MarkCommand;
 import boof.command.TodoCommand;
@@ -22,7 +23,7 @@ public class Parser {
      * Enum representing the different command types.
      */
     public enum CommandType {
-        BYE, LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, FIND, UNKNOWN
+        BYE, LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, FIND, HELP, UNKNOWN
     }
 
     /**
@@ -55,6 +56,8 @@ public class Parser {
             return CommandType.DELETE;
         } else if (command.startsWith("find")) {
             return CommandType.FIND;
+        } else if (command.startsWith("help")) {
+            return CommandType.HELP;
         } else {
             return CommandType.UNKNOWN;
         }
@@ -97,6 +100,8 @@ public class Parser {
         case FIND:
             String findKeyword = parseArgument(input, 5, "\n[!] Format: find <keyword>");
             return new FindCommand(findKeyword);
+        case HELP:
+            return new HelpCommand();
         default:
             throw new InvalidCommandException(input);
         }
