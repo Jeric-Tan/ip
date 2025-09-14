@@ -29,7 +29,7 @@ public class TaskList {
      *
      * @param task the task to add
      */
-    public void add(Task task) {
+    public void addTask(Task task) {
         tasks.add(task);
     }
 
@@ -39,7 +39,7 @@ public class TaskList {
      * @param index the index of the task to remove
      * @return the removed task
      */
-    public Task remove(int index) {
+    public Task removeTask(int index) {
         return tasks.remove(index);
     }
 
@@ -49,7 +49,7 @@ public class TaskList {
      * @param index the index of the task to return
      * @return the task at the specified index
      */
-    public Task get(int index) {
+    public Task getTask(int index) {
         return tasks.get(index);
     }
 
@@ -58,7 +58,7 @@ public class TaskList {
      *
      * @return the number of tasks in the list
      */
-    public int size() {
+    public int getTaskListSize() {
         return tasks.size();
     }
 
@@ -67,7 +67,7 @@ public class TaskList {
      *
      * @return all tasks in the list
      */
-    public ArrayList<Task> getAll() {
+    public ArrayList<Task> getAllTasks() {
         return tasks;
     }
 }

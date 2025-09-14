@@ -26,7 +26,7 @@ public class Storage {
      *
      * @return A list of tasks loaded from the file.
      */
-    public ArrayList<Task> load() {
+    public ArrayList<Task> loadTasks() {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(filePath);
         if (!file.exists()) {
@@ -88,7 +88,7 @@ public class Storage {
      *
      * @param tasks
      */
-    public void save(ArrayList<Task> tasks) {
+    public void saveTasks(ArrayList<Task> tasks) {
         File file = new File(filePath);
         file.getParentFile().mkdirs();
         try (FileWriter fw = new FileWriter(file)) {
