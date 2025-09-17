@@ -4,9 +4,37 @@
 
 Boof is a simple and intuitive task manager for managing todos, deadlines, and events. It supports marking tasks as done, searching, deleting, and more—all via a clean GUI and command-line interface.
 
+## Quick Start
+1. Ensure you have Java 17 or above installed in your Computer.
+Mac users: Ensure you have the precise JDK version prescribed.
+
+2. Download the latest `boof.jar` file from [here](https://github.com/Jeric-Tan/ip/releases).
+
+3. Copy the file to the folder you want to use as the home folder for your Boof App.
+ 
+4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar boof.jar` command to run the application.
+
+
+
+# Feature List
+
+| Command   | Description                | Format                                      |
+|-----------|---------------------------|---------------------------------------------|
+| todo      | Add task            | `todo <description>`                        |
+| deadline  | Add task with deadline     | `deadline <description> /by <date time>`    |
+| event     | Add task with an interval  | `event <description> /from <start> /to <end>` |
+| list      | Display all tasks          | `list`                                      |
+| mark      | Mark task as completed     | `mark <task number>`                        |
+| unmark    | Mark task as incomplete    | `unmark <task number>`                      |
+| delete    | Remove a task              | `delete <task number>`                      |
+| find      | Search tasks by keyword    | `find <keyword>`                            |
+| help      | Show available commands    | `help`                                      |
+| bye       | Exit the application       | `bye`                                       |
+
+
+
 ## Feature: Add Todos
 
-// Feature details
 Add a simple todo task to your list.
 
 Example: `todo Read lecture slides`
@@ -119,3 +147,11 @@ Here are the available commands:
 9. bye - Exits the application.
 10. help - Displays this help message.
 ```
+
+## Feature: Exit
+
+Exits the application
+
+Example: `bye`
+
+
