@@ -1,27 +1,8 @@
 # Boof User Guide
 
-// Update the title above to match the actual product name
+![Boof Screenshot](Ui.png)
 
-// Product screenshot goes here
-![Boof Screenshot](images/DaDuke.png)
-
-// Product intro goes here
 Boof is a simple and intuitive task manager for managing todos, deadlines, and events. It supports marking tasks as done, searching, deleting, and more—all via a clean GUI and command-line interface.
-
-## Adding deadlines
-
-// Describe the action and its outcome.
-You can add a deadline task to keep track of tasks that must be completed by a specific date and time.
-
-// Give examples of usage
-Example: `deadline Submit assignment /by 2025-10-01 2359`
-
-// A description of the expected outcome goes here
-This will add a new deadline task to your list with the specified description and due date.
-
-```
-Added: [D][ ] Submit assignment (by: 2025-10-01 2359)
-```
 
 ## Feature: Add Todos
 
@@ -35,9 +16,22 @@ Expected outcome:
 Added: [T][ ] Read lecture slides
 ```
 
+## Feature: Add Deadlines
+
+You can add a deadline task to keep track of tasks that must be completed by a specific date and time.
+
+Example: `deadline Submit assignment /by 2025-10-01 2359`
+
+This will add a new deadline task to your list with the specified description and due date.
+
+```
+Added: [D][ ] Submit assignment (by: 2025-10-01 2359)
+```
+
+
+
 ## Feature: Add Events
 
-// Feature details
 Add an event task with a start and end time.
 
 Example: `event Team Project Meeting /from 2025-09-30 1400 /to 2025-09-30 1500`
@@ -49,7 +43,6 @@ Added: [E][ ] Team Project Meeting (from: 2025-09-30 1400 to: 2025-09-30 1500)
 
 ## Feature: Mark/Unmark Tasks
 
-// Feature details
 Mark a task as done or not done.
 
 Example: `mark 2`
@@ -70,7 +63,6 @@ OK, I've marked this task as not done yet:
 
 ## Feature: Delete Tasks
 
-// Feature details
 Delete a task from your list.
 
 Example: `delete 3`
@@ -83,7 +75,6 @@ Noted. I've removed this task:
 
 ## Feature: Find Tasks
 
-// Feature details
 Find tasks containing a keyword.
 
 Example: `find assignment`
@@ -96,7 +87,6 @@ Here are the matching tasks in your list:
 
 ## Feature: List Tasks
 
-// Feature details
 Display all tasks in your list.
 
 Example: `list`
@@ -111,7 +101,6 @@ Here are the tasks in your list:
 
 ## Feature: Help
 
-// Feature details
 Show all available commands.
 
 Example: `help`
