@@ -71,6 +71,10 @@ public class Boof {
         }
     }
 
+    /**
+     * Returns the welcome message for JavaFX GUI to display.
+     * @return the welcome message
+     */
     public String getWelcomeMessage() {
         return ui.showWelcome();
     }

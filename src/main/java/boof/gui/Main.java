@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-
 /**
  * A GUI for Boof using FXML.
  */
@@ -23,9 +22,11 @@ public class Main extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
+            stage.setTitle("Boof");
             stage.setScene(scene);
             fxmlLoader.<MainWindow>getController().setBoof(boof); // inject the Boof instance
             stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
